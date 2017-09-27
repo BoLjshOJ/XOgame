@@ -1,20 +1,24 @@
 package boljshoj.xo.model;
 
-import boljshoj.xo.model.exceptions.AlreadyOccupiedException;
 import boljshoj.xo.model.exceptions.InvalidPointException;
 
 import java.awt.*;
 
 public class Field {
 
-    private static final int FIELD_SIZE = 3;
     private static final int MIN_COORDINATE = 0;
-    private static final int MAX_COORDINATE = FIELD_SIZE;
 
-    private final Figure[][] field = new Figure[FIELD_SIZE][FIELD_SIZE];
+    private final Figure[][] field;
+
+    public Field(final int fieldSize) {
+        this.fieldSize = fieldSize;
+        field = new Figure[fieldSize][fieldSize];
+    }
+
+    private final int fieldSize;
 
     public int getSize() {
-        return FIELD_SIZE;
+        return fieldSize;
     }
 
     public Figure getFigure(final Point point) throws InvalidPointException {
@@ -28,15 +32,14 @@ public class Field {
         if (!checkPoint(point)) {
             throw new InvalidPointException();
         }
-
         field[point.x][point.y] = figure;
         }
 
     private boolean checkPoint(Point point) {
-        return checkCoordinate(point.x) && checkCoordinate(point.y);
+        return checkCoordinate(point.x, field.length) && checkCoordinate(point.y, field[point.x].length);
     }
 
-    private boolean checkCoordinate(final int coordinate) {
-        return coordinate >= MIN_COORDINATE && coordinate < MAX_COORDINATE;
+    private boolean checkCoordinate(final int coordinate, final int maxCoordinate) {
+        return coordinate >= MIN_COORDINATE && coordinate < maxCoordinate;
     }
 }
