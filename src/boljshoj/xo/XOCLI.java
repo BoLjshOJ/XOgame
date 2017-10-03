@@ -6,11 +6,13 @@ import boljshoj.xo.model.Game;
 import boljshoj.xo.model.Player;
 import boljshoj.xo.view.ConsoleView;
 
+import java.util.Scanner;
+
 public class XOCLI {
 
     public static void main(final String[] args) {
-        final String name1 = "BoLjshOJ";
-        final String name2 = "Max";
+        final String name1 = playerNameInput(1);
+        final String name2 = playerNameInput(2);
 
         final Player[] players = new Player[2];
         players[0] = new Player(name1, Figure.X);
@@ -23,6 +25,13 @@ public class XOCLI {
         while (consoleView.move(gameXO)) {
             consoleView.show(gameXO);
         }
+    }
+
+    static String playerNameInput(final int count) {
+        Scanner sc = new Scanner(System.in);
+        System.out.format("Enter Player %s name: ", count);
+        String name = sc.nextLine();
+        return name;
     }
 
 }
